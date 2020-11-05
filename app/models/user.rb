@@ -10,7 +10,8 @@ class User < ApplicationRecord
   
   validates :occupation_id, numericality: { other_than: 1 } 
 
-  has_many :evaluations
-  has_many :posts       
+  has_many :evaluations, dependent: :destroy
+  has_many :posts, dependent: :destroy      
+  has_one :card, dependent: :destroy
   has_one_attached :image
 end

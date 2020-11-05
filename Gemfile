@@ -60,3 +60,4 @@ gem 'active_hash'
 gem "chartkick" 
 gem 'groupdate'
 gem 'ancestry'
+gem 'payjp'

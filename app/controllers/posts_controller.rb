@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :find_post, only: :order
 
   # GET /posts
   # GET /posts.json
@@ -61,6 +62,21 @@ class PostsController < ApplicationController
     end
   end
 
+  def order 
+    redirect_to new_card_path and return unless current_user.card.present?
+
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"] 
+   customer_token = current_user.card.customer_token 
+   Payjp::Charge.create(
+     amount: @post.price, 
+     customer: customer_token, 
+     currency: 'jpy' 
+     )
+
+     PostOrder.create(post_id: params[:id])
+     redirect_to root_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -70,5 +86,9 @@ class PostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:title, :content, :pay_id, :price, :category_id).merge(user_id:current_user.id)
+    end
+
+    def find_post
+      @post = Post.find(params[:id]) 
     end
 end
