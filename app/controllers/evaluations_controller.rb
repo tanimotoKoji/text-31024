@@ -1,4 +1,6 @@
 class EvaluationsController < ApplicationController
+  before_action :authenticate_user!, only: [:index,:create,:show]
+  
   def index
     @post = Post.find(params[:post_id])
     #@evaluation = Evaluation.new
