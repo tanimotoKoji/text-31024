@@ -1,0 +1,48 @@
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.rich_text_area :content %>
+  </div>
+
+  <div class="form">
+    <div class="weight-bold-text">
+      カテゴリー
+    </div>
+    <%= form.collection_select(:category_id, Category.all, :id, :name, {}, {class:"select-box", id:"category_id"}) %>
+  </div>
+
+  <div class='field'>
+    <div class='field-label'>
+    <%= form.label :"販売区分" %>
+    <label><%= form.radio_button :pay_id, 1 %>有料</label>
+    <label><%= form.radio_button :pay_id, 2 %>無料</label>
+    </div>
+  </div> 
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.text_field :price %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

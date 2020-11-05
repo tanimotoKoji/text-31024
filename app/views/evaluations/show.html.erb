@@ -1,0 +1,8 @@
+<h1>みんなからのフィードバック</h1>
+<%= link_to '投稿内容詳細', post_path%>
+
+<p>①購入意欲</p>
+<%= pie_chart @aggregate, width: "600px"%>
+
+<p>②用途</p>
+<%= pie_chart @second_aggregate, width: "600px"%>

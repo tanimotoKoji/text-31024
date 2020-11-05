@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Pay:</strong>
+  <%= @post.pay_id %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @post.price %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+<%= link_to 'みなさんのご意見お聞かせ下さい', post_evaluations_path(@post)%>
+<%= link_to 'この投稿に対する評価一覧', post_evaluation_path(@post)%>
