@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :posts
   devise_for :users
   devise_scope :users do
     get '/users', to: redirect("/users/sign_up")
@@ -10,4 +9,7 @@ Rails.application.routes.draw do
     resources :evaluations, only: [:index, :show, :create]
   end
   resources :users
+  resources :posts do
+    resources :orders, only: [:index, :create]
+  end
 end
