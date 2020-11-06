@@ -29,15 +29,14 @@
   </div>
 
   <div class='field'>
-    <div class='field-label'>
-    <%= form.label :"販売区分" %>
-    <label><%= form.radio_button :pay_id, 1 %>有料</label>
-    <label><%= form.radio_button :pay_id, 2 %>無料</label>
-    </div>
-  </div> 
+  <div class='field-label'>
+    <p>有料公開か無料公開が選択</p>
+    <%= form.collection_radio_buttons(:pay_id, Pay.all, :id, :name, {}, {class:"radio-box", id:"pay_category"}) %>
+  </div>
+  </div>   
 
   <div class="field">
-    <%= form.label :price %>
+    <%= form.label :"販売価格" %>
     <%= form.text_field :price %>
   </div>
 

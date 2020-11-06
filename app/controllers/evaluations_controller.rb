@@ -1,11 +1,16 @@
 class EvaluationsController < ApplicationController
+  before_action :authenticate_user!, only: [:index,:create,:show]
+  helper_method :sort_column, :sort_direction
+  
   def index
     @post = Post.find(params[:post_id])
-    #@evaluation = Evaluation.new
+    @evaluation = Evaluation.new
   end
 
+  
+
   def create
-    @evaluation = Evaluation.new(evaluation_params)
+    @evaluation = Evaluation.create(evaluation_params)
     if @evaluation.save
         redirect_to root_path
       else
@@ -14,7 +19,7 @@ class EvaluationsController < ApplicationController
     end
   
   def show
-    @evaluation = Evaluation.find(params[:id])
+    @evaluation = Evaluation.find(params[:post_id])
     @first_id = Evaluation.pluck(:first_id)
     @aggregate = aggregateOpinion(@first_id)
     @second_id = Evaluation.pluck(:second_id)
@@ -42,7 +47,7 @@ class EvaluationsController < ApplicationController
 
   private
     def evaluation_params
-      params.permit(:comment, :first_id, :second_id, :third_id, :fourth_id, :fifth_id, :sixth_id, :seventh_id, :eighth_id, :ninth_id, :tenth_id).merge(user_id: current_user.id, post_id: params[:post_id])
+      params.require(:evaluation).permit(:comment, :first_id, :second_id, :third_id, :fourth_id, :fifth_id, :sixth_id, :seventh_id, :eighth_id, :ninth_id, :tenth_id, :rate).merge(user_id: current_user.id, post_id: params[:post_id])
     end
 end
 

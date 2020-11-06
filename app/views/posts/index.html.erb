@@ -2,17 +2,20 @@
 
 <h1>Posts</h1>
 <% if user_signed_in?%>
-  <%= link_to "ログアウト", destroy_user_session_path %>
+  <%= link_to "ログアウト", destroy_user_session_path, method: :delete%>
+  <%= link_to "マイページ", user_path(current_user.id) %>
 <% else %>
 <%= link_to "新規登録", new_user_registration_path %>
 <%= link_to "ログイン", user_session_path %>
 <% end %>
 
-
+<h1>いいね数トップ３！！</h1>
 <table>
   <thead>
     <tr>
       <th>Title</th>
+      <th>みんなからの評価</th>
+      <th>カテゴリー</th>
       <th>販売</th>
       <th>価格</th>
       <th>投稿者</th>
@@ -21,20 +24,73 @@
   </thead>
 
   <tbody>
+    <% @post_rank.each do |post_rank| %>
+      <tr>
+        <td><%= post_rank.title %></td>
+        <td><%= "評価詳細を確認" %>
+        <%#= link_to 'みんなからの評価', post_evaluation_path(post_rank.id) %></td>
+        <td><%= post_rank.category.name %></td>
+        <td><%= post_rank.pay.name %></td>
+        <td><%= post_rank.price %></td>
+        <td>
+        <a href="/users/<%= post_rank.user.id %>">
+        <%= post_rank.user.nickname %>
+        </a>
+        </td>
+
+        <td><%= link_to '購入する(ワンクリックで購入されるので注意））', order_post_path(post_rank.id), method: :post %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>投稿一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>カテゴリー</th>
+      <th>販売</th>
+      <th>価格</th>
+      <th>投稿者</th>
+      <th>総合評価<th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
     <% @posts.each do |post| %>
       <tr>
         <td><%= post.title %></td>
-        <td><%= post.pay_id %></td>
+        <td><%= post.category.name %></td>
+        <td><%= post.pay.name %></td>
         <td><%= post.price %></td>
         <td>
         <a href="/users/<%= post.user.id %>">
-        <%= post.user.nickname %>
-        </a></td>
+      <%= post.user.nickname %>
+    </a></td>
+
+          <!--星評価-->
+        <td><div id="star-rate-<%= post.id %>"></div>
+          <script>
+          $('#star-rate-<%= post.id %>').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            readOnly: true,
+            score: <%= "#{post.evaluations.average(:rate)}"%>,
+          });
+          </script> </td>
+        <!--/星評価-->
+      
         
         <td><%= link_to 'Show', post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to '購入する', order_post_path(post.id), method: :post %></td>
+        <td><%= link_to '購入する(ワンクリックで購入されるので注意））', order_post_path(post.id), method: :post %></td>
       </tr>
     <% end %>
   </tbody>

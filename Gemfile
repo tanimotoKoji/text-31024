@@ -61,3 +61,4 @@ gem "chartkick"
 gem 'groupdate'
 gem 'ancestry'
 gem 'payjp'
+gem 'pry-byebug'

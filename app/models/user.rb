@@ -13,5 +13,7 @@ class User < ApplicationRecord
   has_many :evaluations, dependent: :destroy
   has_many :posts, dependent: :destroy      
   has_one :card, dependent: :destroy
+  has_many :user_rooms
+  has_many :chats
   has_one_attached :image
 end

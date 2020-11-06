@@ -17,6 +17,10 @@
       <%=@profile%> 
     </p>
 
+  <%= link_to 'この人とチャットする', chat_path(@user.id)%>
+
+
+<% if current_user == @user %>
      <div class="Card__title">
     <h2>カード情報<h2>
   </div>
@@ -35,7 +39,7 @@
     <%= @card[:exp_year] %>
     <%# 有効期限の「年」を取得 %>
   </div>
-
+<% end %>
 <div class="contents row">
   <h2><%= @nickname %>さんの投稿一覧</h2>
   <% @posts.each do |post| %>
@@ -47,6 +51,6 @@
   <% end %>
 </div>
 <%= link_to 'Back', posts_path %>
-<%= link_to '編集', edit_user_path %>
+<%= link_to '編集', edit_user_registration_path %>
 </body>
 </html>

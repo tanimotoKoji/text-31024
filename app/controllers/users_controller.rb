@@ -1,14 +1,15 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:show]
 
   def show
-    user = User.find(params[:id])
-    @nickname = user.nickname
-    @profile = user.profile
-    @age = user.age.name
-    @occupation = user.occupation.name
-    @gender = user.gender.name
-    @posts = user.posts
-    @user_image = user.image
+    @user = User.find(params[:id])
+    @nickname = @user.nickname
+    @profile = @user.profile
+    @age = @user.age.name
+    @occupation = @user.occupation.name
+    @gender = @user.gender.name
+    @posts = @user.posts
+    @user_image = @user.image
 
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"] # 環境変数を読み込む
     card = Card.find_by(user_id: current_user.id) # ユーザーのid情報を元に、カード情報を取得
