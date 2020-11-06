@@ -18,4 +18,7 @@ Rails.application.routes.draw do
   resources :users, only: :show
   get 'chat/:id' => 'chats#show', as: 'chat'
   resources :chats, only: [:create]
+
+  post "likes/:post_id/create" => "likes#create"
+  post "likes/:post_id/destroy" => "likes#destroy"
 end

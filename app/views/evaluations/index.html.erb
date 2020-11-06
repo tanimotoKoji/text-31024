@@ -5,6 +5,50 @@
     </div>
     <div class='account-page__inner--right user-form'>
       <%= form_with model: @evaluation, url:post_evaluations_path, local: true do |f|%>
+
+      <% if @evaluation.errors.any? %>
+      <div id="error_explanation">
+      <h2><%= pluralize(@evaluation.errors.count, "error") %> prohibited this evaluation from being saved:</h2>
+
+      <ul>
+        <% @evaluation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+      </div>
+      <% end %>
+
+
+      <!--商品コードの送信-->
+        <%#= f.hidden_field :post_id, { value: @post.id} %>
+
+        <!-- 評価 -->
+      <div class="form-group row" id="star">
+        <%= f.label :rate,'総合評価', class:'col-md-3 col-form-label' %>
+        <%= f.hidden_field :rate, id: :review_star %>
+      </div>
+
+      <!-- 評価javascript -->
+      <script>
+      $('#star').raty({
+        size     : 36,
+        starOff:  '<%= asset_path('star-off.png') %>',
+        starOn : '<%= asset_path('star-on.png') %>',
+        starHalf: '<%= asset_path('star-half.png') %>',
+        scoreName: 'evaluation[rate]',
+        half: true,
+      });
+      </script>  
+
+      <!-- 口コミ -->
+      <div class="form-group row">
+        <%= f.label :comment, 'コメント ', class:'col-md-3 col-form-label' %>
+      <div class="col-md-9">
+       <%= f.text_area :comment, class: "form-control", rows: "8",
+        placeholder:'投稿に対するご意見、ご感想のご記入お願い致します' %>
+      </div>
+      </div>
+
         
         <div class='field'>
           <div class='field-label'>
@@ -16,6 +60,7 @@
             <label><%= f.radio_button :first_id, 5 %>改善した方が良い</label>
           </div>
          </div> 
+         
 
          <div class='field'>
           <div class='field-label'>
@@ -53,7 +98,7 @@
           <div class='field'>
           <div class='field-label'>
           <%= f.label :"品質" %>
-            <label><%= f.radio_button :fifht_id, 1 %>素晴らしい</label>
+            <label><%= f.radio_button :fifth_id, 1 %>素晴らしい</label>
             <label><%= f.radio_button :fifth_id, 2 %>良い</label>
             <label><%= f.radio_button :fifth_id, 3 %>どちらとも言えない</label>
             <label><%= f.radio_button :fifth_id, 4 %>あまり良くない</label>
@@ -107,7 +152,7 @@
 
           <div class='field'>
           <div class='field-label'>
-          <%= f.label :"総合評価" %>
+          <%= f.label :"感動度" %>
             <label><%= f.radio_button :tenth_id, 1 %>素晴らしい</label>
             <label><%= f.radio_button :tenth_id, 2 %>良い</label>
             <label><%= f.radio_button :tenth_id, 3 %>どちらとも言えない</label>
@@ -115,17 +160,6 @@
             <label><%= f.radio_button :tenth_id, 5 %>改善した方が良い</label>
           </div>
          </div> 
-
-         <div class='field'>
-          <div class='field-label'>
-            <%= f.label :"コメント"%>
-          </div>
-          <div class='field-input'>
-            <%= f.text_area :comment, class:"comment-text", id:"comment-info", placeholder:"企画者に伝えたいこと" ,rows:"7" ,maxlength:"1000" %>
-          </div>
-        </div>
-
-
 
           <div class='actions'>
           <%= f.submit "フィードバックを送信", class: 'btn'%>

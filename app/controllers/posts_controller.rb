@@ -1,17 +1,23 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new,:create,:edit,:update]
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:edit, :update, :destroy]
   before_action :find_post, only: :order
 
   # GET /posts
   # GET /posts.json
   def index
     @posts = Post.includes(:user)
+    @evaluations = Evaluation.includes(:post)
+    @post_rank = Post.find(Like.group(:post_id).order('count(post_id) desc').limit(3).pluck(:post_id))
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @post = Post.find_by(id: params[:id])
+    @user = @post.user
+    # 変数@likes_countを定義
+    @likes_count = Like.where(post_id: @post.id).count
   end
 
   # GET /posts/new
@@ -92,4 +98,6 @@ class PostsController < ApplicationController
     def find_post
       @post = Post.find(params[:id]) 
     end
+
+    
 end

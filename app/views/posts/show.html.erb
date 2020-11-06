@@ -1,26 +1,46 @@
 <p id="notice"><%= notice %></p>
 
+<%= "いいよね！"%><% if Like.find_by(user_id: current_user.id, post_id: @post.id) %>
+    <%= link_to("/likes/#{@post.id}/destroy", {method: "post"}) do %>
+        <span class="fa fa-heart like-btn-unlike"></span>
+    <% end %>
+<% else %>
+    <%= link_to("/likes/#{@post.id}/create", {method: "post"}) do %>
+       <span class="fa fa-heart like-btn"></span>
+    <% end %>
+<% end %>
+<%= @likes_count %><br>
+
 <p>
   <strong>Title:</strong>
   <%= @post.title %>
 </p>
 
 <p>
-  <strong>Pay:</strong>
+  <strong>カテゴリー:</strong>
+</p>
+
+<p>
+  <strong>販売区分:</strong>
   <%= @post.pay_id %>
 </p>
 
 <p>
-  <strong>Price:</strong>
+  <strong>価格:</strong>
   <%= @post.price %>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @post.user_id %>
+  <strong>投稿者:</strong>
+  <%= @post.user.nickname %>
 </p>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<p>
+  <strong>内容詳細:</strong>
+  <%= @post.content %>
+</p>
+
+<%= link_to '編集', edit_post_path(@post) %> |
+<%= link_to '戻る', posts_path %>
 <%= link_to 'みなさんのご意見お聞かせ下さい', post_evaluations_path(@post)%>
 <%= link_to 'この投稿に対する評価一覧', post_evaluation_path(@post)%>
