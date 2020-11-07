@@ -7,8 +7,10 @@ Rails.application.routes.draw do
 
   root to: "posts#index"
   resources :posts do
-    resources :evaluations, only: [:index, :show, :create]
+    resources :evaluations, only: [:index, :create]
   end
+
+  resources :evaluations
   
   resources :cards, only: [:new, :create]
   resources :posts, only: :order do

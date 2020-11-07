@@ -12,19 +12,26 @@ class EvaluationsController < ApplicationController
   def create
     @evaluation = Evaluation.create(evaluation_params)
     if @evaluation.save
-        redirect_to root_path
+        redirect_to action: :show
       else
         render :index
       end
     end
   
   def show
-    @evaluation = Evaluation.find(params[:post_id])
-    @first_id = Evaluation.pluck(:first_id)
+    @post = Post.find(params[:id])
+    @evaluation = Evaluation.new
+    @evaluations = @post.evaluations
+    @first_id = Evaluation.where(post_id: @post.id).pluck(:first_id)
     @aggregate = aggregateOpinion(@first_id)
-    @second_id = Evaluation.pluck(:second_id)
+    @second_id = Evaluation.where(post_id: @post.id).pluck(:second_id)
     @second_aggregate = aggregateOpinion(@second_id)
-    #@evaluations = @post.evaluations.includes(:user)
+    @third_id = Evaluation.where(post_id: @post.id).pluck(:third_id)
+    @third_aggregate = aggregateOpinion(@third_id)
+    @fourth_id = Evaluation.where(post_id: @post.id).pluck(:fourth_id)
+    @fourth_aggregate = aggregateOpinion(@fourth_id)
+    @fifth_id = Evaluation.where(post_id: @post.id).pluck(:fifth_id)
+    @fifth_aggregate = aggregateOpinion(@fifth_id)
   end
 
   def aggregateOpinion(array)
