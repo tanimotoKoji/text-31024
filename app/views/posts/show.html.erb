@@ -1,5 +1,43 @@
-<p id="notice"><%= notice %></p>
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+</head>
+
+
+<div class="loader">
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+          <a href="" id="time_result" class="time"></a>
+        </div>
+         
+        <div class="header-right">
+          <%= link_to '投稿一覧',posts_path %>
+          <a href="../top_pages/show">ランキングをみる！</a>
+          <%if user_signed_in?%>
+            <a href="/posts/new">投稿してみよう！</a>
+           <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <%else%>
+            <%= link_to '新規登録', new_user_registration %>
+            <%= link_to 'ログイン', new_user_session_path %>
+          <%end%>
+        </div>
+      </div>
+    </header>
+
+
+
+
+
+<div class="main-conteiner">
+<div class="like">
 <%= "いいよね！"%><% if Like.find_by(user_id: current_user.id, post_id: @post.id) %>
     <%= link_to("/likes/#{@post.id}/destroy", {method: "post"}) do %>
         <span class="fa fa-heart like-btn-unlike"></span>
@@ -11,24 +49,34 @@
 <% end %>
 <%= @likes_count %><br>
 
+<% unless @post.genre_id == 5%>
+  <%= link_to '⭐️ この投稿に対する評価一覧 ⭐️', evaluation_path(@post.id), class:"like-comment"%><br>
+<% if current_user.id != @post.user_id %>  
+  <%= link_to '⭐️ 詳細評価の入力もお願い致します!! ⭐️', post_evaluations_path(@post.id), class:"like-comment"%>
+<% end %>
+<% end %>
+
+<% if @post.genre_id == 5 && @follower.include?(current_user.id) %>
+  <%= link_to '🚨 グループ内アンケートに参加 🚨', post_evaluations_path(@post.id), class:"like-comment"%>
+<% end %>
+</div>
+<div class="main-post">
 <p>
   <strong>Title:</strong>
   <%= @post.title %>
 </p>
-
+<% if current_user.id == @post.user.id%>
+ <% if @buy.include?(@post.id)%>
+  <%= link_to '編集', edit_post_path(@post.id), class:"edit-btn"%>
+ <% end %>  
+ <% unless @buy.include?(@post.id)%> 
+  <%= link_to '編集', edit_post_path(@post.id), class:"edit-btn"%>
+  <%= link_to '削除', post_path(@post.id), method: :delete, class:"edit-btn"%>
+ <% end %>
+<% end %>
 <p>
   <strong>カテゴリー:</strong>
   <%= @post.category.name %>
-</p>
-
-<p>
-  <strong>販売区分:</strong>
-  <%= @post.pay_id %>
-</p>
-
-<p>
-  <strong>価格:</strong>
-  <%= @post.price %>
 </p>
 
 <p>
@@ -37,11 +85,10 @@
 </p>
 
 <p>
-  <strong>内容詳細:</strong>
+  <strong>コンテンツ:</strong>
   <%= @post.content %>
 </p>
+</div>
 
-<%= link_to '編集', edit_post_path(@post.id) %> |
-<%= link_to '戻る', posts_path %>
-<%= link_to 'みなさんのご意見お聞かせ下さい', post_evaluations_path(@post.id)%>
-<%= link_to 'この投稿に対する評価一覧', evaluation_path(@post.id)%>
+</div>
+</div>

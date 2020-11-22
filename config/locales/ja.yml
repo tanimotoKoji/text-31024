@@ -1,0 +1,33 @@
+ja:
+ activerecord:
+   attributes:
+     user:
+       nickname: ニックネーム
+       profile: プロフィール
+       gender_id: 性別
+       last_name: ラストネーム
+       first_name: ファーストネーム
+       last_name_kana: ラストネーム読み
+       first_name_kana: ファーストネーム読み
+       age_id: 年代
+       occupation_id: 職種
+     post:
+       title: タイトル
+       pay_id: 販売区分
+       price: 価格
+       category_id: カテゴリー①
+       number1: 質問①
+       number2: 質問②
+       number3: 質問③
+       number4: 質問④
+       number5: 質問⑤
+       genre_id: カテゴリー②
+       type_id: カテゴリー③
+     evaluation:
+       first_id: 質問①
+       second_id: 質問②
+       third_id: 質問③
+       fourth_id: 質問④
+       fifth_id: 質問⑤
+       comment: コメント
+       rate: 総合評価   

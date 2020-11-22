@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_06_034257) do
+ActiveRecord::Schema.define(version: 2020_11_21_145521) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -66,11 +66,6 @@ ActiveRecord::Schema.define(version: 2020_11_06_034257) do
     t.integer "third_id", null: false
     t.integer "fourth_id", null: false
     t.integer "fifth_id", null: false
-    t.integer "sixth_id", null: false
-    t.integer "seventh_id", null: false
-    t.integer "eighth_id", null: false
-    t.integer "ninth_id", null: false
-    t.integer "tenth_id", null: false
     t.text "comment"
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
@@ -92,7 +87,10 @@ ActiveRecord::Schema.define(version: 2020_11_06_034257) do
     t.bigint "post_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.string "price"
     t.index ["post_id"], name: "index_post_orders_on_post_id"
+    t.index ["user_id"], name: "index_post_orders_on_user_id"
   end
 
   create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -103,7 +101,24 @@ ActiveRecord::Schema.define(version: 2020_11_06_034257) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "category_id"
+    t.string "number1"
+    t.string "number2"
+    t.string "number3"
+    t.string "number4"
+    t.string "number5"
+    t.integer "genre_id"
+    t.integer "type_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "follow_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["follow_id"], name: "index_relationships_on_follow_id"
+    t.index ["user_id", "follow_id"], name: "index_relationships_on_user_id_and_follow_id", unique: true
+    t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
   create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -144,4 +159,6 @@ ActiveRecord::Schema.define(version: 2020_11_06_034257) do
   add_foreign_key "evaluations", "posts"
   add_foreign_key "evaluations", "users"
   add_foreign_key "post_orders", "posts"
+  add_foreign_key "relationships", "users"
+  add_foreign_key "relationships", "users", column: "follow_id"
 end

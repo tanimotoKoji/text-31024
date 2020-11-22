@@ -13,6 +13,12 @@ require("../card")
 require("../jquery.raty.js")
 require('jquery')
 require("jquery.raty")
+require("../time")
+require("../alert")
+require("../posts.alert")
+require("../post.price")
+require("../evaluation.alert")
+require("../type")
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)

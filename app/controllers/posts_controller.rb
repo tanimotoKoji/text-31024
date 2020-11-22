@@ -1,29 +1,27 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:new,:create,:edit,:update]
+  before_action :authenticate_user!, only: [:new, :create, :show, :edit, :update]
   before_action :set_post, only: [:edit, :update, :destroy]
   before_action :find_post, only: :order
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.includes(:user)
-    @evaluations = Evaluation.includes(:post)
-    @post_rank = Post.find(Like.group(:post_id).order('count(post_id) desc').limit(3).pluck(:post_id))
-    @order_rank = Post.find(PostOrder.group(:post_id).order('count(post_id) desc').limit(3).pluck(:post_id))
+    @post = Post.where.not(genre_id: 5).includes(:user)
+    @q = Post.where.not(genre_id: 5).ransack(params[:q])
+    @post = @q.result(distinct: true)
+    @buy = PostOrder.where(user_id: current_user.id).pluck(:post_id)
   end
-
-  # GET /posts/1
-  # GET /posts/1.json
-  def show
-    @post = Post.find_by(id: params[:id])
-    @user = @post.user
-    # 変数@likes_countを定義
-    @likes_count = Like.where(post_id: @post.id).count
-  end
-
   # GET /posts/new
   def new
     @post = Post.new
+  end
+
+  def show
+    @post = Post.find_by(id: params[:id])
+    @user = @post.user
+    @likes_count = Like.where(post_id: @post.id).count
+    @follower = Relationship.where(follow_id: @user.id).pluck(:user_id)
+    @buy = PostOrder.where(user_id: current_user.id).pluck(:post_id)
   end
 
   # GET /posts/1/edit
@@ -81,8 +79,8 @@ class PostsController < ApplicationController
      currency: 'jpy' 
      )
 
-     PostOrder.create(post_id: params[:id])
-     redirect_to root_path
+     PostOrder.create(post_id: params[:id], user_id: current_user.id, price: @post.price)
+     redirect_to post_path
   end
 
   private
@@ -93,7 +91,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content, :pay_id, :price, :category_id).merge(user_id:current_user.id)
+      params.require(:post).permit(:title, :content, :pay_id, :price, :category_id, :genre_id, :type_id, :number1, :number2, :number3, :number4, :number5).merge(user_id:current_user.id)
     end
 
     def find_post

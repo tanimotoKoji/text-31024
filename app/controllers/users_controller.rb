@@ -8,16 +8,19 @@ class UsersController < ApplicationController
     @age = @user.age.name
     @occupation = @user.occupation.name
     @gender = @user.gender.name
-    @posts = @user.posts
+    @post = @user.posts
+    @posts = @post.where.not(genre_id: 5)
+    @buy = PostOrder.where(user_id: current_user.id).pluck(:post_id)
     @user_image = @user.image
 
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"] # 環境変数を読み込む
-    card = Card.find_by(user_id: current_user.id) # ユーザーのid情報を元に、カード情報を取得
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"] 
+    card = Card.find_by(user_id: current_user.id) 
 
     redirect_to new_card_path and return unless card.present?
 
-    customer = Payjp::Customer.retrieve(card.customer_token) # 先程のカード情報を元に、顧客情報を取得
+    customer = Payjp::Customer.retrieve(card.customer_token)
     @card = customer.cards.first
   end
   
+
 end

@@ -1,24 +1,62 @@
-<%= link_to 'Back', posts_path %>
 
-<%= form_with model: @chat do |f| %>
-    <%= f.text_field :message %>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<div class="loader">
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+          <a href="" id="time_result" class="time"></a>
+        </div>
+       <div class="header-right">
+          <a href="../posts/new">投稿してみよう！</a>
+          <%= link_to '投稿一覧',posts_path %>
+          <a href="../top_pages/show">ランキングをみる！</a>
+          <%if user_signed_in?%>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <%else%>
+          <%= link_to '新規登録', new_user_registration %>
+          <%= link_to 'ログイン', new_user_session_path %>
+          <%end%>
+        </div>
+      </div>
+    </header>
+
+
+
+
+<h1 class="chat-h1"><%=@user.nickname%>さんのチャットルーム</h1>
+<div class="chat-room">
+
+
+<%= form_with model: @chat, class:"chats" do |f| %>
+    <%= f.text_field :message, class:"chat-message" %>
     <%= f.hidden_field :room_id %>
-    <%= f.submit %>
+    <%= f.submit class:"chats-btn" %>
 <% end %>
 <table>
     <thead>
-        <tr>
+        <tr class="chat-tag">
             <td>投稿者名</td>
+            <td></td>
             <td>投稿内容</td>
+            
         </tr>
     </thead>
     <tbody>
         <% @chats.each do |chat| %>
-            <tr>
-                <td><a href="/users/<%= chat.user.id %>">
-                 <%= chat.user.nickname %></td>
-                <td><%= chat.message %></td>
+            <tr class="chat-contents">
+                <td class="chat-user-name"><a class="chat-a" href="/users/<%= chat.user.id %>">
+                 <%= chat.user.nickname %></td><td><%= image_tag chat.user.image , :size =>'70x70', class:"chat-user-img"%></td>
+                <td class="chat-message"><%= chat.message %></td>
             </tr>
         <% end %>
     </tbody>
 </table>
+</div>
+</div>

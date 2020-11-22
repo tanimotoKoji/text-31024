@@ -3,7 +3,6 @@
     <div class='account-page__inner--left account-page__header'>
       <h2>Edit Account</h2>
       <h5>アカウントの編集</h5>
-      <%= link_to "ログアウト", "#", class: 'btn'%>
       <%= link_to "マイページに戻る", user_path, class: 'btn'%>
     </div>
     <div class='account-page__inner--right user-form'>
@@ -45,12 +44,19 @@
         <%= f.file_field :image, id:"item-image" %>
          </div>
           </div>
-          <div class='field'>
-          <div class='field-label'>
+          <div class='user-field'>
+          <div class='user-field-label'>
           <p>性別</p>
-          <%= f.collection_radio_buttons(:gender_id, Gender.all, :id, :name, {}, {class:"radio-box", id:"gender_category"}) %>
+          <input class="user-radio-box" id="gender_category" type="radio" value="1" name="user[gender_id]">
+          <label for="gender_category">男性</label>
+          <input class="user-radio-box" id="gender_category[2]" type="radio" value="2" name="user[gender_id]">
+          <label for="gender_category[2]">女性</label>
+          <input class="user-radio-box" id="gender_category[3]" type="radio" value="3" name="user[gender_id]">
+          <label for="gender_category[3]">その他</label>
+          <%#= f.collection_radio_buttons(:gender_id, Gender.all, :id, :name, {}, {class:"user-radio-box", id:"gender_category"}) %>
           </div>
          </div>   
+          
           
           <div class='field'>
           <div class='field-label'>
