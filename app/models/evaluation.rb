@@ -8,11 +8,6 @@ class Evaluation < ApplicationRecord
   validates :third_id
   validates :fourth_id
   validates :fifth_id
-  validates :sixth_id
-  validates :seventh_id
-  validates :eighth_id
-  validates :ninth_id
-  validates :tenth_id
   validates :comment
   end
   validates :rate, numericality: {

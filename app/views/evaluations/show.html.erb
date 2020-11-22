@@ -1,26 +1,63 @@
-<h1>みんなからのフィードバック</h1>
-<%= link_to '投稿内容詳細', post_path%>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>   
+</head>
+<div class="loader">
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+           <a href="" id="time_result" class="time"></a>
+        </div>
+         
+        <div class="header-right">
+          <%= link_to '投稿内容詳細', post_path%>
+          <a href="/users/<%= @post.user.id %>">投稿者ユーザーページ</a>
+          <a href="/posts">ランキングをみる！</a>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+        </div>
+      </div>
+    </header>
+
+
+
+<div class="evaluation-title">
+<h1>ユーザーからのフィードバック</h1>
+</div>
+
+<div class="main-evaluation">
+<div class="user-comment">
 <table>
   <thead>
     <tr>
-      <th>コメント</th>
-      <th>ユーザー</th>
-      <th>総合評価</th>
+      <th class="ev-tag">😆 コメント</th>
+      <th class="ev-tag">💓 ユーザー</th>
+      <th class="ev-tag">📝 総合評価</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
+
   <tbody>
     <% @evaluations.each do |evaluation| %>
       <tr>
-        <td><%= evaluation.comment %></td>
-        <td>
+        <td class="ev-comment">
+		     <%= evaluation.comment %>
+        </td>
+
+        <td class="ev-user">
         <a href="/users/<%= evaluation.user.id %>">
       <%= evaluation.user.nickname %>
+      <%= image_tag evaluation.user.image , :size =>'140x140', class:"post-user-img"%>
     </a></td>
+  
 
           <!--星評価-->
-        <td><div id="star-rate-<%= evaluation.id %>"></div>
+        <td class="ev-star"><div id="star-rate-<%= evaluation.id %>"></div>
           <script>
           $('#star-rate-<%= evaluation.id %>').raty({
             size: 36,
@@ -40,21 +77,41 @@
       </tr>
   </tbody>
 </table>
+</div>
 
 
 
-
-<p>①</p>
-<%= pie_chart @aggregate, width: "600px"%>
-
-<p>②</p>
-<%= pie_chart @second_aggregate, width: "600px"%>
-
-<p>③</p>
-<%= pie_chart @third_aggregate, width: "600px"%>
-
-<p>④</p>
-<%= pie_chart @fourth_aggregate, width: "600px"%>
-
-<p>⑤</p>
-<%= pie_chart @fifth_aggregate, width: "600px"%>
+<div class="pie-chart">
+<div class="pie-chart_first">
+<div class="chart-title">
+<%="質問①"%> <%= @post.number1%>
+</div>
+<%= pie_chart @aggregate, width: "400px", height:"350px", class:"chart"%>
+</div>
+<div class="pie-chart_second">
+<div class="chart-title">
+<%="質問②"%> <%= @post.number2%>
+</div>
+<%= pie_chart @second_aggregate, width: "400px", height:"350px", class:"chart"%>
+</div>
+<div class="pie-chart_third">
+<div class="chart-title">
+<%="質問③"%> <%= @post.number3%>
+</div>
+<%= pie_chart @third_aggregate, width: "400px", height:"350px", class:"chart"%>
+</div>
+<div class="pie-chart_fourth">
+<div class="chart-title">
+<%="質問④"%> <%= @post.number4%>
+</div>
+<%= pie_chart @fourth_aggregate, width: "400px", height:"350px", class:"chart"%>
+</div>
+<div class="pie-chart_fifth">
+<div class="chart-title">
+<%="質問⑤"%> <%= @post.number5%>
+</div>
+<%= pie_chart @fifth_aggregate, width: "400px", height:"350px", class:"chart"%>
+</div>
+</div>
+</div>
+</div>

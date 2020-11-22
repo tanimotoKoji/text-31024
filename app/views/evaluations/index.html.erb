@@ -1,9 +1,50 @@
-<div class='account-page' id='account-page'>
-  <div class='account-page__inner clearfix'>
-    <div class='account-page__inner--left account-page__header'>
-      <h5>フィードバック作成フォーム</h5>
-    </div>
-    <div class='account-page__inner--right user-form'>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>   
+</head>
+<div class="loader">
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+           <a href="" id="time_result" class="time"></a>
+        </div>
+         
+        <div class="header-right">
+          <a href="/users/<%= @post.user.id %>">投稿者ユーザーページ</a>
+          <%if user_signed_in?%>
+          <%= link_to '投稿に対しての評価一覧', evaluation_path(@post.id) %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <%else%>
+          <%= link_to '新規登録', new_user_registration %>
+          <%= link_to 'ログイン', new_user_session_path %>
+          <%end%>
+        </div>
+      </div>
+    </header>
+
+
+
+
+    
+
+
+      <div class="evaluation-forms">
+      <div class="evaluation-h1">
+      <h1>📝 フィードバックフォーム 📝</h1></div>
+      <div class="evaluation-user">
+      <p>
+        <strong>⭐️ 投稿者:</strong>
+        <a href="/users/<%= current_user.id %>">
+        <%= current_user.nickname %></a><%="⭐️"%>
+      </p>
+      </div>
+
       <%= form_with model: @evaluation, url:post_evaluations_path, local: true do |f|%>
 
       <% if @evaluation.errors.any? %>
@@ -15,20 +56,14 @@
           <li><%= message %></li>
         <% end %>
       </ul>
-      </div>
+   
       <% end %>
-
-
-      <!--商品コードの送信-->
-        <%#= f.hidden_field :post_id, { value: @post.id} %>
-
-        <!-- 評価 -->
-      <div class="form-group row" id="star">
-        <%= f.label :rate,'総合評価', class:'col-md-3 col-form-label' %>
-        <%= f.hidden_field :rate, id: :review_star %>
+      
+      <div class="star-rate" id="star">
+        <%= f.label :rate,'😊 総合評価', class:'star-label' %>
+        <%= f.hidden_field :rate, id: :review_star, class:"star" %>
       </div>
 
-      <!-- 評価javascript -->
       <script>
       $('#star').raty({
         size     : 36,
@@ -40,130 +75,100 @@
       });
       </script>  
 
-      <!-- 口コミ -->
-      <div class="form-group row">
-        <%= f.label :comment, 'コメント ', class:'col-md-3 col-form-label' %>
-      <div class="col-md-9">
-       <%= f.text_area :comment, class: "form-control", rows: "8",
+      <div class="evaluation-comments">
+       <%= f.label :comment, '😆 コメント ', class:'comment-label' %>
+       <%= f.text_area :comment, class: "comment-form", rows: "8",
         placeholder:'投稿に対するご意見、ご感想のご記入お願い致します' %>
       </div>
-      </div>
-
+       <div class="ev-text">
+       <p>※質問内容の記載がない場合は投稿者が編集ページで修正をお願い致します.</p>
+       <p>※投稿者ユーザーページ→チャットページでメッセージを送れます.</p></div>
         
-        <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"購入意欲" %>
-            <label><%= f.radio_button :first_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :first_id, 2 %>良い</label>
-            <label><%= f.radio_button :first_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :first_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :first_id, 5 %>改善した方が良い</label>
+        <div class='questions-field'>
+          <div class='fields-label'>
+          <%= "質問①: "%><%=@post.number1 %><br>
+            <%= f.radio_button :first_id, 1 %>
+            <label for="evaluation_first_id_1">素晴らしい</label>
+            <%= f.radio_button :first_id, 2 %>
+            <label for="evaluation_first_id_2">良い</label>
+            <%= f.radio_button :first_id, 3 %>
+            <label for="evaluation_first_id_3">普通</label>
+            <%= f.radio_button :first_id, 4 %>
+            <label for="evaluation_first_id_4">あまり良くない</label>
+            <%= f.radio_button :first_id, 5 %>
+            <label for="evaluation_first_id_5">要改善</label>
           </div>
          </div> 
          
 
-         <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"用途" %>
-            <label><%= f.radio_button :second_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :second_id, 2 %>良い</label>
-            <label><%= f.radio_button :second_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :second_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :second_id, 5 %>改善した方が良い</label>
+         <div class='questions-field'>
+          <div class='fields-label'>
+          <%= "質問②: "%><%=@post.number2 %><br>
+            <%= f.radio_button :second_id, 1 %>
+            <label for="evaluation_second_id_1">素晴らしい</label>
+            <%= f.radio_button :second_id, 2 %>
+            <label for="evaluation_second_id_2">良い</label>
+            <%= f.radio_button :second_id, 3 %>
+            <label for="evaluation_second_id_3">普通</label>
+            <%= f.radio_button :second_id, 4 %>
+            <label for="evaluation_second_id_4">あまり良くない</label>
+            <%= f.radio_button :second_id, 5 %>
+            <label for="evaluation_second_id_5">要改善</label>
           </div>
          </div> 
 
-         <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"価格設定" %>
-            <label><%= f.radio_button :third_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :third_id, 2 %>良い</label>
-            <label><%= f.radio_button :third_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :third_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :third_id, 5 %>改善した方が良い</label>
+         <div class='questions-field'>
+          <div class='fields-label'>
+          <%= "質問③: "%><%=@post.number3 %><br>
+            <%= f.radio_button :third_id, 1 %>
+            <label for="evaluation_third_id_1">素晴らしい</label>
+            <%= f.radio_button :third_id, 2 %>
+            <label for="evaluation_third_id_2">良い</label>
+            <%= f.radio_button :third_id, 3 %>
+            <label for="evaluation_third_id_3">普通</label>
+            <%= f.radio_button :third_id, 4 %>
+            <label for="evaluation_third_id_4">あまり良くない</label>
+            <%= f.radio_button :third_id, 5 %>
+            <label for="evaluation_third_id_5">要改善</label>
           </div>
-         </div> 
-
-          <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"デザイン" %>
-            <label><%= f.radio_button :fourth_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :fourth_id, 2 %>良い</label>
-            <label><%= f.radio_button :fourth_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :fourth_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :fourth_id, 5 %>改善した方が良い</label>
-          </div>
-         </div> 
-
-          <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"品質" %>
-            <label><%= f.radio_button :fifth_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :fifth_id, 2 %>良い</label>
-            <label><%= f.radio_button :fifth_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :fifth_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :fifth_id, 5 %>改善した方が良い</label>
-          </div>
-         </div> 
-
-         <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"利益体系" %>
-            <label><%= f.radio_button :sixth_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :sixth_id, 2 %>良い</label>
-            <label><%= f.radio_button :sixth_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :sixth_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :sixth_id, 5 %>改善した方が良い</label>
-          </div>
-         </div> 
-
-         <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"寿命" %>
-            <label><%= f.radio_button :seventh_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :seventh_id, 2 %>良い</label>
-            <label><%= f.radio_button :seventh_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :seventh_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :seventh_id, 5 %>改善した方が良い</label>
-          </div>
-         </div> 
-
-          <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"実現可能性" %>
-            <label><%= f.radio_button :eighth_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :eighth_id, 2 %>良い</label>
-            <label><%= f.radio_button :eighth_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :eighth_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :eighth_id, 5 %>改善した方が良い</label>
-          </div>
-         </div> 
-
-         <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"プレゼン力" %>
-            <label><%= f.radio_button :ninth_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :ninth_id, 2 %>良い</label>
-            <label><%= f.radio_button :ninth_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :ninth_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :ninth_id, 5 %>改善した方が良い</label>
-          </div>
-         </div> 
-
-          <div class='field'>
-          <div class='field-label'>
-          <%= f.label :"感動度" %>
-            <label><%= f.radio_button :tenth_id, 1 %>素晴らしい</label>
-            <label><%= f.radio_button :tenth_id, 2 %>良い</label>
-            <label><%= f.radio_button :tenth_id, 3 %>どちらとも言えない</label>
-            <label><%= f.radio_button :tenth_id, 4 %>あまり良くない</label>
-            <label><%= f.radio_button :tenth_id, 5 %>改善した方が良い</label>
-          </div>
-         </div> 
-
-          <div class='actions'>
-          <%= f.submit "フィードバックを送信", class: 'btn'%>
         </div>
+
+         <div class='questions-field'>
+          <div class='fields-label'>
+          <%= "質問④: "%><%=@post.number4 %><br>
+            <%= f.radio_button :fourth_id, 1 %>
+            <label for="evaluation_fourth_id_1">素晴らしい</label>
+            <%= f.radio_button :fourth_id, 2 %>
+            <label for="evaluation_fourth_id_2">良い</label>
+            <%= f.radio_button :fourth_id, 3 %>
+            <label for="evaluation_fourth_id_3">普通</label>
+            <%= f.radio_button :fourth_id, 4 %>
+            <label for="evaluation_fourth_id_4">あまり良くない</label>
+            <%= f.radio_button :fourth_id, 5 %>
+            <label for="evaluation_fourth_id_5">要改善</label>
+          </div>
+         </div> 
+
+          <div class='questions-field'>
+          <div class='fields-label'>
+          <%= "質問⑤: "%><%=@post.number5 %><br>
+            <%= f.radio_button :fifth_id, 1 %>
+            <label for="evaluation_fifth_id_1">素晴らしい</label>
+            <%= f.radio_button :fifth_id, 2 %>
+            <label for="evaluation_fifth_id_2">良い</label>
+            <%= f.radio_button :fifth_id, 3 %>
+            <label for="evaluation_fifth_id_3">普通</label>
+            <%= f.radio_button :fifth_id, 4 %>
+            <label for="evaluation_fifth_id_4">あまり良くない</label>
+            <%= f.radio_button :fifth_id, 5 %>
+            <label for="evaluation_fifth_id_5">要改善</label>
+          </div>
+         </div> 
+
+      <div class="actions">
+       <%= f.submit class:"evaluations-btn"%>
+      </div>
     <% end %>
   </div>
+</div>
 </div>

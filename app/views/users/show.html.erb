@@ -1,28 +1,61 @@
-<!DOCTYPE html>
-<html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="description" content="自己紹介ページです。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
-<body>
-<%= image_tag @user_image , :size =>'320x400', class:"user-box-img"%>
+
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+          <a href="" id="time_result" class="time"></a>
+        </div>
+       <div class="header-right">
+          <a href="/posts/new">投稿してみよう！</a>
+          <%= link_to '投稿一覧',posts_path %>
+          <a href="/top_pages/show">ランキングをみる！</a>
+          <%if user_signed_in?%>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <%else%>
+          <%= link_to '新規登録', new_user_registration %>
+          <%= link_to 'ログイン', new_user_session_path %>
+          <%end%>
+        </div>
+      </div>
+</header>
+
+  <div class="user-total">
+    <%= image_tag @user_image , :size =>'400x320', class:"user-box-img"%>
+    <div class="profile-details">
+    <%= link_to '✉️ メッセージを送る!', chat_path(@user.id), class:"dm"%>
+    <%= render partial: "follow_button", locals: {user: @user } %>
+    <div class="sm">
+    <% if current_user.id == @user.id%>
+    <%= link_to '🎁 シークレットページ', user_secret_index_path(@user), class:"sms"%>
+    <% end %><br>
+   </div>
     <h2>プロフィール</h2>
     <P>名前：<%= @nickname %></p>
     <p>性別：<%= @gender %></p>
     <p>年齢：<%= @age %></p>
     <p>職業：<%= @occupation %></p>
-    
     <h2>ひとこと</h2>
     <p>
       <%=@profile%> 
     </p>
-
-  <%= link_to 'この人とチャットする', chat_path(@user.id)%>
+    </div>
+ 
 
 
 <% if current_user == @user %>
-     <div class="Card__title">
-    <h2>カード情報<h2>
+  <div class="Card__title">
+   <% if current_user.id == 5%>
+    <%= link_to '㊙️ スーパーシークレットページ', user_secret_path(@user), class:"sms"%>
+    <% end %>
+  <h2><%= link_to '編集する', edit_user_registration_path %></h2>
+  <h2>カード情報</h2>
   </div>
   <div class="Card_info">
     【カード番号】
@@ -40,17 +73,17 @@
     <%# 有効期限の「年」を取得 %>
   </div>
 <% end %>
-<div class="contents row">
+
+<div class="contents-row">
   <h2><%= @nickname %>さんの投稿一覧</h2>
   <% @posts.each do |post| %>
-    <span class="name">タイトル:<%= post.title %></span>
-
-      <p>詳細：<%= post.content %></p>
-      
-    </div>
-  <% end %>
+  <% unless @buy.include?(post.id) || current_user.id == post.user_id%>
+    <span class="name">Title:<%= post.title %></span>
+  <% else %>  
+    <span class="name">Title:<a class="user-a" href="/posts/<%= post.id %>"><%= post.title %></span></a>
+  <% end %>  
+    <div class="user-contents"><p>Opening：<%= post.content %></p></div>
+     <% end %>
+  </div>
 </div>
-<%= link_to 'Back', posts_path %>
-<%= link_to '編集', edit_user_registration_path %>
-</body>
-</html>
+

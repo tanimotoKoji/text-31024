@@ -10,9 +10,10 @@ class EvaluationsController < ApplicationController
   
 
   def create
+    @post = Post.find(params[:post_id])
     @evaluation = Evaluation.create(evaluation_params)
     if @evaluation.save
-        redirect_to action: :show
+        redirect_to root_path
       else
         render :index
       end
@@ -54,7 +55,7 @@ class EvaluationsController < ApplicationController
 
   private
     def evaluation_params
-      params.require(:evaluation).permit(:comment, :first_id, :second_id, :third_id, :fourth_id, :fifth_id, :sixth_id, :seventh_id, :eighth_id, :ninth_id, :tenth_id, :rate).merge(user_id: current_user.id, post_id: params[:post_id])
+      params.require(:evaluation).permit(:comment, :first_id, :second_id, :third_id, :fourth_id, :fifth_id, :rate).merge(user_id: current_user.id, post_id: params[:post_id])
     end
 end
 
