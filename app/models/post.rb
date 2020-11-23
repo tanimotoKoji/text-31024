@@ -5,7 +5,6 @@ class Post < ApplicationRecord
   belongs_to_active_hash :type
   belongs_to_active_hash :pay
   belongs_to :user
-  belongs_to :type
   has_many :evaluations, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_rich_text :content
@@ -13,6 +12,7 @@ class Post < ApplicationRecord
 
   with_options presence: true do
   validates :title
+  validates :content
   validates :pay_id
   validates :price,format: {with: /\A[0-9]+\z/}
   validates :user_id

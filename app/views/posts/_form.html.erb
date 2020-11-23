@@ -56,13 +56,12 @@
     <label for="pay_category">有料公開</label>
     <input class="post-radio-box" id="pay_category[2]" type="radio" value="2" name="post[pay_id]">
     <label for="pay_category[2]">無料公開</label>
-    <%#= form.collection_radio_buttons(:pay_id, Pay.all, :id, :name, {}, {class:"post-radio-box", id:"pay_category"}) %>
   </div>
   </div>
 
   <div class="price-field">
     <%= form.label :"💸 販売価格:(半角数字のみ)"%><br>
-    <%= form.text_field :price, class:"price-box", id:"price-box"%>
+    <%= form.number_field :price, class:"price-box", id:"price-box"%>
   </div>
 
    <div class="content-field">
