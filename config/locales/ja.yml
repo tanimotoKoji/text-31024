@@ -23,6 +23,7 @@ ja:
        number5: 質問⑤
        genre_id: カテゴリー②
        type_id: カテゴリー③
+       content: 投稿内容
      evaluation:
        first_id: 質問①
        second_id: 質問②

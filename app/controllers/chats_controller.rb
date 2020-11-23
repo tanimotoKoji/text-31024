@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :show]
+  before_action :authenticate_user!, only: [:create]
   
   def show
     @user = User.find(params[:id])

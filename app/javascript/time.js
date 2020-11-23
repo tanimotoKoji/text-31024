@@ -1,3 +1,4 @@
+window.addEventListener("turbolinks:load", function(){
 var realTimeDatetimeDisplay = function() {
   var dateObj        = new Date(),
       dateYear       = dateObj.getFullYear(),
@@ -35,3 +36,4 @@ var realTimeDatetimeDisplay = function() {
 
 
 realTimeDatetimeDisplay();
+});

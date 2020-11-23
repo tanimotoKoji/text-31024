@@ -34,7 +34,7 @@
 <div class="chat-room">
 
 
-<%= form_with model: @chat, class:"chats" do |f| %>
+<%= form_with model: @chat, class:"chats", remote:false do |f| %>
     <%= f.text_field :message, class:"chat-message" %>
     <%= f.hidden_field :room_id %>
     <%= f.submit class:"chats-btn" %>
