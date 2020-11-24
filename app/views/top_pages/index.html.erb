@@ -1,0 +1,59 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+</head>
+
+<div class="loader">
+
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+             <a href="" id="time_result" class="time"></a>
+        </div>
+         
+        <div class="header-right">
+          <%if user_signed_in?%>
+          <a href="/users/<%= current_user.id %>">ユーザーページ</a>
+          <%= link_to '投稿一覧',posts_path %>
+          <a href="./top_pages/show">ランキングをみる！</a>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <%else%>
+          <%= link_to '新規登録', new_user_registration_path %>
+          <%= link_to 'ログイン', new_user_session_path %>
+          <%end%>
+        </div>
+      </div>
+    </header>
+
+
+<div class="main-content">
+<div class="top-wrapper">
+      <div class="container">
+        <h1>Post Your Work.</h1>
+        <h1>Let's get everyone to evaluate.</h1>
+        <p>LGTMはみなさんが創作した作品やアイディアを売買、評価しあえる場です</p>
+        <p>趣味、ビジネス、簡単なアンケートにもご利用頂けます</p>
+        <p>あなたのアイディアを投稿し、皆さんから意見をもらいましょう！</p>
+        <div class="btn-wrapper">
+          <div class="btn signup">
+          <a href="#" >投稿作品はtrix-editorで作成。<br>
+          画像の挿入等も簡単、お手軽です！</a><br>
+          <img class="trix" src="/assets/trix.png" alt="trix" height="100" width="50">
+          </div>
+          <div class="btn-evaluate">
+          <a href="#" >皆さんが設定した質問にユーザーが回答。<br>
+          その結果をグラフ表示、アンケートでもOK！ </a><br>
+          <img class="trix" src="/assets/evaluations.png" alt="evaluation" height="100" width="50">
+          </div>
+          
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>

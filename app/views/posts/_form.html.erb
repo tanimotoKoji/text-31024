@@ -1,0 +1,108 @@
+
+
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="main-post">
+  <p>⭐️ 下記項目全て記載をお願い致します ⭐️</p>
+  <h2>①基本情報</h2>
+  
+  <div class="title-field">
+    <%= form.label :"📝  タイトル:" %><br>
+    <%= form.text_field :title , class:"title-box" %>
+  </div>
+
+  <div class="form">
+    <div class="weight-bold-text">
+      📖 カテゴリー①:
+    </div>
+    <%= form.collection_select(:category_id, Category.all, :id, :name, {}, {class:"post-select-box", id:"category_id"}) %>
+  </div>
+
+  <div class="form">
+    <div class="weight-bold-text">
+      💭 カテゴリー②:
+      <p> ※グループ内アンケートを選択された場合、フォロワーのみ回答可</p>
+      <p> ユーザーシークレットページより回答、一覧ページにも公開されません。</p>
+    </div>
+    <%= form.collection_select(:genre_id, Genre.all, :id, :name, {}, {class:"post-select-box", id:"genre_id"}) %>
+  </div>
+ 
+  <div class="form">
+    <div class="weight-bold-text">
+      😎 カテゴリー③:
+    </div>
+    <%= form.collection_select(:type_id, Type.all, :id, :name, {}, {class:"post-select-box", id:"type_id"}) %>
+  </div>
+
+  
+  <div class='pay-field'>
+  <div class='pay-field-label'>
+    <p>💰 有料・無料を選択</p>
+    <input class="post-radio-box" id="pay_category" type="radio" value="1" name="post[pay_id]">
+    <label for="pay_category">有料公開</label>
+    <input class="post-radio-box" id="pay_category[2]" type="radio" value="2" name="post[pay_id]">
+    <label for="pay_category[2]">無料公開</label>
+  </div>
+  </div>
+
+  <div class="price-field">
+    <%= form.label :"💸 販売価格:(半角数字のみ)"%><br>
+    <%= form.number_field :price, class:"price-box", id:"price-box"%>
+  </div>
+
+  <div class="content-field">
+  <h2>②投稿内容詳細</h2>
+    <%= form.label :"📖 コンテンツ" %>
+    <a href="https://trix-editor.org/", class="index">Trixの使い方を確認！</a>
+     <%= form.rich_text_area :content, class:"rich-text" %>
+  </div>
+
+  <div class="point-form">
+  <h2>③フィードバックして欲しい項目を作成</h2>
+  <p>🚨５択で回答できる内容を設定してください🚨</p>
+
+  <div class="evaluations">
+  <div class="evaluation-field">
+    <%= form.label :"質問① (質問内容を記載）" %>
+    <%= form.text_field :number1, class:"a-point-form" %>
+  </div>
+
+  <div class="evaluation-field">
+    <%= form.label :"質問② (質問内容を記載）" %>
+    <%= form.text_field :number2, class:"b-point-form" %>
+  </div>
+
+  <div class="evaluation-field">
+    <%= form.label :"質問③ (質問内容を記載）" %>
+    <%= form.text_field :number3, class:"c-point-form" %>
+  </div>
+
+  <div class="evaluation-field">
+    <%= form.label :"質問④ (質問内容を記載）" %>
+    <%= form.text_field :number4, class:"d-point-form" %>
+  </div>
+
+  <div class="evaluation-field">
+    <%= form.label :"質問⑤ (質問内容を記載）" %>
+    <%= form.text_field :number5, class:"e-point-form" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class:"posts-btn"%>
+  </div>
+  </div>
+  </div>
+   <% end %>
+  
+</div>

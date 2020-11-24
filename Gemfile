@@ -1,3 +1,8 @@
+group :production do
+  #gem 'rails_12factor'
+  gem 'unicorn', '5.4.1'
+end
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -40,6 +45,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'rspec-rails', '~> 4.0.0'
 end
 
 group :test do
@@ -60,3 +66,11 @@ gem 'active_hash'
 gem "chartkick" 
 gem 'groupdate'
 gem 'ancestry'
+gem 'payjp'
+gem 'pry-byebug'
+gem 'ransack'
+gem 'ancestry'
+gem 'rails-i18n'
+gem 'jquery-rails'
+gem 'factory_bot_rails'
+gem 'faker'

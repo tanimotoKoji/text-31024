@@ -1,0 +1,133 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+</head>
+
+<div class="loader">
+
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+          
+        </div>
+         
+        <div class="header-right">
+          <a href="../posts/new">投稿してみよう！</a>
+          <%= link_to '投稿一覧',posts_path %>
+          <%if user_signed_in?%>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <a href="/users/<%= current_user.id %>">ユーザーページ</a>
+          <%else%>
+          <%= link_to '新規登録', new_user_registration_path %>
+          <%= link_to 'ログイン', new_user_session_path %>
+          <%end%>
+    
+        </div>
+      </div>
+    </header>>
+
+    <div class="backimage">
+    </div>
+<h1 class="picktag">🔥 Pick Up User 🔥</h1>
+<div class="rank-main">    
+<p>※投稿の売上数、評価、フォロワー数より注目ユーザーを紹介！</p>
+<div class="like-rank">
+<div class="user-table">
+<table>
+  <thead>
+    <tr>
+      <th class="user-tag">💓 ユーザー名</th>
+      <th class="user-tag">😎 イメージ</th>
+      <th class="user-occupation">⛑ 職種</th>
+      <th class="user-occupation">フォロー</th>
+      <th class="user-occupation">メッセージ</th>
+      <th class="user-content">🔥 プロフィール</th>
+    </tr>
+  </thead>
+  </div>
+
+  <div class="like-user">
+   <tbody>
+    <% @user_rank.each do |user_rank| %>
+      <tr>
+        <td class="user-rank"><a href="/users/<%= user_rank.id %>"><%= user_rank.nickname %></td>
+        <td class="user-rank"> <%= image_tag user_rank.image , :size =>'160x120', class:"user-rank-img"%></td>
+        <td class="user-rank"><%= user_rank.occupation.name %></td>
+        <td class="user-rank"><%= render partial: "follow_button", locals: {user: user_rank } %></td>
+        <td class="user-rank"><%= link_to '✉️  送る!', chat_path(user_rank.id), class:"mail"%></td>
+        <td class="user-comments"><%= user_rank.profile %></td>
+         </tr>
+    <% end %>
+  </tbody>
+  </table>  
+  </div>
+  </div>
+
+<h1>👑 人気ランキングトップ３ 👑</h1>
+<p>※売上数といいよね数で集計しております</p>
+
+<div class="like-rank">
+<div class="like-table">
+<table>
+  <thead>
+    <tr>
+      <th class="title-tag">📖 Title</th>
+      <th class="title-category">😎 カテゴリー</th>
+      <th class="title-tag">📝 総合評価</th>
+      <th class="title-tag">💓 投稿者</th>
+      <th class="title-content">💡 Opening</th>
+    </tr>
+  </thead>
+  </div>
+
+  <div class="like-contents">
+  <tbody>
+    <% @post_rank.each do |post_rank| %>
+      <tr>
+      <% unless @buy.include?(post_rank.id)%>
+        <td class="title-rank"><%= post_rank.title %></td>
+      <% else %>
+         <td class="title-rank"><a href="/posts/<%= post_rank.id %>"><%= post_rank.title %></a></td>
+      <% end %>   
+        <td class="title-rank"><%= post_rank.genre.name %></td>
+        <td class="title-rank"><div id="star-rate-<%= post_rank.id %>"> </div></td>
+        <td class="title-rank">
+        <a href="/users/<%= post_rank.user.id %>">
+        <%= post_rank.user.nickname %>
+        <%= image_tag post_rank.user.image , :size =>'100x100', class:"post-user-img"%>
+        </a>
+        </td>
+         <td class="content-rank"><%= post_rank.content %></td>
+         <!--星評価-->
+        <td><div id="star-rate-<%= post_rank.id %>"></div>
+          <script>
+          $('#star-rate-<%= post_rank.id %>').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            readOnly: true,
+            score: <%= "#{post_rank.evaluations.average(:rate)}"%>,
+          });
+          </script> </td>
+        <!--/星評価-->
+
+
+
+        
+       
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+
+
+</div>

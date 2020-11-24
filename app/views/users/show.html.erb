@@ -1,0 +1,88 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+        </div>
+       <div class="header-right">
+          <a href="/posts/new">投稿してみよう！</a>
+          <%= link_to '投稿一覧',posts_path %>
+          <a href="/top_pages/show">ランキングをみる！</a>
+          <%if user_signed_in?%>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <%else%>
+          <%= link_to '新規登録', new_user_registration %>
+          <%= link_to 'ログイン', new_user_session_path %>
+          <%end%>
+        </div>
+      </div>
+</header>
+
+  <div class="user-total">
+    <%= image_tag @user_image , :size =>'400x320', class:"user-box-img"%>
+    <div class="profile-details">
+    <%= link_to '✉️ チャットルームへ!', chat_path(@user.id), class:"dm"%>
+    <%= render partial: "follow_button", locals: {user: @user } %>
+    <div class="sm">
+    <% if current_user.id == @user.id%>
+    <%= link_to '🎁 シークレットページ', user_secret_index_path(@user), class:"sms"%>
+    <% end %><br>
+   </div>
+    <h2>プロフィール</h2>
+    <P>名前：<%= @nickname %></p>
+    <p>性別：<%= @gender %></p>
+    <p>年齢：<%= @age %></p>
+    <p>職業：<%= @occupation %></p>
+    <h2>ひとこと</h2>
+    <p>
+      <%=@profile%> 
+    </p>
+    </div>
+ 
+
+
+<% if current_user == @user %>
+  <div class="Card__title">
+   <% if current_user.id == 5%>
+    <%= link_to '㊙️ スーパーシークレットページ', user_secret_path(@user), class:"sms"%>
+    <% end %>
+  <h2><%= link_to '編集する', edit_user_registration_path %></h2>
+  <h2>カード情報</h2>
+  </div>
+  <div class="Card_info">
+    【カード番号】
+    <br>
+    <%= "**** **** **** " + @card[:last4] %>
+    <%# カード番号の下4桁を取得 %>
+
+    <br>
+    【有効期限】
+    <br>
+    <%= @card[:exp_month] %>
+    <%# 有効期限の「月」を取得 %>
+    /
+    <%= @card[:exp_year] %>
+    <%# 有効期限の「年」を取得 %>
+  </div>
+<% end %>
+
+<div class="contents-row">
+  <h2><%= @nickname %>さんの投稿一覧</h2>
+  <% @posts.each do |post| %>
+  <% unless @buy.include?(post.id) || current_user.id == post.user_id%>
+    <span class="name">Title:<%= post.title %></span>
+  <% else %>  
+    <span class="name">Title:<a class="user-a" href="/posts/<%= post.id %>"><%= post.title %></span></a>
+  <% end %>  
+    <div class="user-contents"><p>Opening：<%= post.content %></p></div>
+     <% end %>
+  </div>
+</div>
+

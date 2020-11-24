@@ -1,0 +1,114 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+
+<div class="loader">
+<header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/">
+          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          </a>
+          
+        </div>
+         
+        <div class="header-right">
+          <a href="./posts/new">投稿してみよう！</a>
+          <a href="./top_pages/show">ランキングをみる！</a>
+          <%if user_signed_in?%>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <a href="/users/<%= current_user.id %>">ユーザーページ</a>
+          <%else%>
+          <%= link_to '新規登録', new_user_registration %>
+          <%= link_to 'ログイン', new_user_session_path %>
+          <%end%>
+          
+        </div>
+      </div>
+    </header>
+      
+     <div class="post-backimage"></div>
+      <h1 class="show-tagl">検索</h1>
+      <div class="search-window">
+      <%= search_form_for @q do |f| %>
+      <%= f.label :title, "❓ キーワード:" %>
+      <%= f.search_field :title_cont, class:"search-title"%>
+
+      <%= f.label :"❓ 価格:" %>
+      <%= f.number_field :price_gteq, class:"search-pricel"%>円以上〜
+      <%= f.number_field :price_lt, class:"search-pricep"%>円未満<br>
+      <%= f.label :"❓ 大カテゴリー:" %>
+      <%= f.collection_select(:genre_id_eq, Genre.all, :id, :name, {}, {class:"post-search-box", id:"genre_id"}) %>
+      <%= f.label :"❓ 中カテゴリー:" %>
+      <%= f.collection_select(:type_id_eq, Type.all, :id, :name, {}, {class:"type-search-box", id:"type_id"}) %>
+      <%= f.submit "検索", class:"search-btn" %>
+      <% end %>
+      </div>
+    
+<h1 class="show-tag">投稿一覧</h1>
+<div class="all-main">
+
+<p class="post-p">💡 投稿詳細→タイトル名クリック！(有料は要購入) 💡 並び替え→テーブル名クリック！</p>
+<div class="all-posts">
+<table>
+  <thead>
+    <tr>
+      <th class="show-title"><%= sort_link(@q, :title, "📖 Title") %></th>
+      <th class="show-category"><%= sort_link(@q, :category_id, "😎 カテゴリー")%></th>
+      <th class="show-price"><%= sort_link(@q, :price, "💰 価格")%></th>
+      <th class="show-user"><%= sort_link(@q, :user_id, "💓 投稿者")%></th>
+      <th class="show-evaluation"><%= sort_link(@q, :rate, "📝 総合評価")%></th>
+      <th class="show-opening">💡 Opening</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @post.each do |post| %>
+      <tr>
+        <% unless @buy.include?(post.id) || current_user.id == post.user_id%>
+        <td class="post-title"><%= post.title %></a></td>
+        <% else %>
+        <td class="post-title"><a href="/posts/<%= post.id %>"><%= post.title %></a></td>
+        <% end %>
+        <td class="post-category"><%= post.genre.name %></td>
+        <td class="post-price"><%= post.price %><%="円"%>
+        <% if current_user.id == post.user_id%>
+        <button type="submit" class="buyed-btn" disabled>投稿品</button>
+        <% elsif @buy.include?(post.id)%>
+        <button type="submit" class="buyed-btn" disabled>購入済</button>
+        <% elsif post.pay_id == 1%>
+        <%= button_to "購入", order_post_path(post.id), method: :post, class:"buy-btn", id:"buy-btn"%>
+        <% end%></td>
+        <td class="post-user">
+        <a href="/users/<%= post.user.id %>">
+        <%= post.user.nickname %><%= image_tag post.user.image , :size =>'100x100', class:"post-user-img"%></td>
+        <td class="post-evaluation"><div id="star-rate-<%= post.id %>"></div>
+        </a></td>
+        <td class="post-opening"><%= post.content %></td>
+
+          <!--星評価-->
+        
+          <script>
+          $('#star-rate-<%= post.id %>').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            readOnly: true,
+            score: <%= "#{post.evaluations.average(:rate)}"%>,
+          });
+          </script> 
+        <!--/星評価-->
+        
+        
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+</div>

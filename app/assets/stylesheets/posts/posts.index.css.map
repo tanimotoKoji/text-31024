@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "posts.index.scss"
+    ],
+    "names": [],
+    "file": "posts.index.css"
+}
