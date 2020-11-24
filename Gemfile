@@ -1,3 +1,8 @@
+group :production do
+  #gem 'rails_12factor'
+  gem 'unicorn', '5.4.1'
+end
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
