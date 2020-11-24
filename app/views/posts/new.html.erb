@@ -3,25 +3,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>   
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  
+    
 </head>
+
+
 <div class="loader">
 <header>
       <div class="container">
         <div class="header-left">
-           
-          <a href="/">
+         <a href="/">
           <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
           </a> 
+           
         </div>
          
         <div class="header-right">
-         <a href="" id="time_result" class="timez"></a>
           <%= link_to '投稿一覧',posts_path %>
           <a href="/top_pages/show">ランキングをみる！</a>
           <%if user_signed_in?%>
-          <%= link_to 'ログアウト', destroy_user_session_path, method: :derete %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
           <a href="/users/<%= current_user.id %>">ユーザーページ</a>
           <%else%>
           <%= link_to '新規登録', new_user_registration %>
@@ -31,10 +33,11 @@
       </div>
     </header>
 
-
-
 <div class="new-h1">
 <h1>投稿フォーム</h1>
-</div>
+
 
 <%= render 'form', post: @post %>
+</div>
+</div>
+

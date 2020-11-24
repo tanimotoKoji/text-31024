@@ -15,7 +15,6 @@
           <a href="/">
           <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
           </a>
-          <a href="" id="time_result" class="time"></a>
         </div>
          
         <div class="header-right">
@@ -49,7 +48,7 @@
 <% end %>
 
 <% if @post.genre_id == 5 && @follower.include?(current_user.id) %>
-  <%= link_to '🚨 グループ内アンケートに参加 🚨', post_evaluations_path(@post.id), class:"like-comment"%>
+  <%= link_to '🚨 グループ内アンケートに参加 🚨', post_evaluations_path(@post.id), class:"like-comment", data: {"turbolinks" => false}%>
 <% end %>
 </div>
 <div class="main-post">

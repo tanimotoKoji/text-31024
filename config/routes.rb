@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   get 'cards/new'
   devise_for :users
   #devise_scope :users do

@@ -215,7 +215,7 @@ header {
   position: relative;
   background-image: image-url('359393_s.jpg');
   background-size: cover;
-  color: white;
+  color:black;
 
 }
 .like{
@@ -230,7 +230,7 @@ header {
 .like-comment{
   font-size: 30px;
   font-weight: bold;
-  color:white;
+  color:chocolate;
   border-bottom: white double 3px;
 }
 .main-post{
@@ -243,6 +243,8 @@ header {
   border: solid 1px azure;
 }
 .new-h1{
+  width: 100%;
+  height: 100%;
   padding-top: 28px;
   height: 30px;
 }
