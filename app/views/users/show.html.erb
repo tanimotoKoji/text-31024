@@ -10,7 +10,6 @@
           <a href="/">
           <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
           </a>
-          <a href="" id="time_result" class="time"></a>
         </div>
        <div class="header-right">
           <a href="/posts/new">投稿してみよう！</a>
@@ -29,7 +28,7 @@
   <div class="user-total">
     <%= image_tag @user_image , :size =>'400x320', class:"user-box-img"%>
     <div class="profile-details">
-    <%= link_to '✉️ メッセージを送る!', chat_path(@user.id), class:"dm"%>
+    <%= link_to '✉️ チャットルームへ!', chat_path(@user.id), class:"dm"%>
     <%= render partial: "follow_button", locals: {user: @user } %>
     <div class="sm">
     <% if current_user.id == @user.id%>

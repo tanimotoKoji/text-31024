@@ -17,4 +17,8 @@ def configure_permitted_parameters
   devise_parameter_sanitizer.permit(:sign_up, keys: [:nickname, :profile, :gender_id, :occupation_id, :age_id, :last_name, :first_name, :last_name_kana, :first_name_kana, :image])
 end
 
+def no_use_turbolinks_cache
+  @use_turbolinks_cache = false
+end
+
 end

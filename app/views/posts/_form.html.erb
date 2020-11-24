@@ -1,8 +1,5 @@
 
 
-
-
-
 <%= form_with(model: post, local: true) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
@@ -64,12 +61,11 @@
     <%= form.number_field :price, class:"price-box", id:"price-box"%>
   </div>
 
-   <div class="content-field">
+  <div class="content-field">
   <h2>②投稿内容詳細</h2>
- 
     <%= form.label :"📖 コンテンツ" %>
     <a href="https://trix-editor.org/", class="index">Trixの使い方を確認！</a>
-    <%= form.rich_text_area :content, class:"rich-text" %>
+     <%= form.rich_text_area :content, class:"rich-text" %>
   </div>
 
   <div class="point-form">
@@ -106,6 +102,7 @@
     <%= form.submit class:"posts-btn"%>
   </div>
   </div>
-<% end %>
-</div>
+  </div>
+   <% end %>
+  
 </div>
