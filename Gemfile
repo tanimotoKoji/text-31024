@@ -74,3 +74,4 @@ gem 'rails-i18n'
 gem 'jquery-rails'
 gem 'factory_bot_rails'
 gem 'faker'
+gem "aws-sdk-s3", require: false
