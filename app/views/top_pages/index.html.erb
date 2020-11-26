@@ -11,7 +11,7 @@
       <div class="container">
         <div class="header-left">
           <a href="/">
-          <img class="logo" alt="Flower" height="50" src="/assets/logo.png" width="120" />
+          <%= image_tag asset_path('logo.png'),alt:"trix", height:60, width:120, class:"logo" %>
           </a>
              <a href="" id="time_result" class="time"></a>
         </div>
@@ -43,12 +43,12 @@
           <div class="btn signup">
           <a href="#" >投稿作品はtrix-editorで作成。<br>
           画像の挿入等も簡単、お手軽です！</a><br>
-          <img class="trix" src="/assets/trix.png" alt="trix" height="100" width="50">
+          <%= image_tag asset_path('trix.png'),alt:"trix", height:400, width:450, class:"trix" %>
           </div>
           <div class="btn-evaluate">
           <a href="#" >皆さんが設定した質問にユーザーが回答。<br>
           その結果をグラフ表示、アンケートでもOK！ </a><br>
-          <img class="trix" src="/assets/evaluations.png" alt="evaluation" height="100" width="50">
+          <%= image_tag asset_path('evaluations.png'),alt:"trix", height:400, width:450, class:"trix" %>
           </div>
           
         </div>
