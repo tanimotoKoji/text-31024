@@ -21,3 +21,5 @@ class CardsController < ApplicationController
     end
   end
 end
+#Payjp.api_key = Rails.application.credentials[:payjp][:secret_key]
+#Payjp.api_key = Rails.application.credentials.payjp[:PAYJP_PRIVATE_KEY]
