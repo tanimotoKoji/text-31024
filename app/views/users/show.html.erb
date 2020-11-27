@@ -50,7 +50,7 @@
 
 <% if current_user == @user %>
   <div class="Card__title">
-   <% if current_user.id == 5%>
+   <% if current_user.id == 1%>
     <%= link_to '㊙️ スーパーシークレットページ', user_secret_path(@user), class:"sms"%>
     <% end %>
   <h2><%= link_to '編集する', edit_user_registration_path %></h2>
