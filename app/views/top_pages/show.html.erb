@@ -56,7 +56,9 @@
     <% @user_rank.each do |user_rank| %>
       <tr>
         <td class="user-rank"><a href="/users/<%= user_rank.id %>"><%= user_rank.nickname %></td>
+        <% if user_rank.image.attached?%>
         <td class="user-rank"> <%= image_tag user_rank.image , :size =>'160x120', class:"user-rank-img"%></td>
+        <% end %>
         <td class="user-rank"><%= user_rank.occupation.name %></td>
         <td class="user-rank"><%= render partial: "follow_button", locals: {user: user_rank } %></td>
         <td class="user-rank"><%= link_to '✉️  送る!', chat_path(user_rank.id), class:"mail"%></td>
