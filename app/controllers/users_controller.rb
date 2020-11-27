@@ -13,13 +13,13 @@ class UsersController < ApplicationController
     @buy = PostOrder.where(user_id: current_user.id).pluck(:post_id)
     @user_image = @user.image
 
-    Payjp.api_key = Rails.application.credentials.PAYJP[:PAYJP_SECRET_KEY]
-    card = Card.find_by(user_id: current_user.id) 
+    #Payjp.api_key = Rails.application.credentials.PAYJP[:PAYJP_SECRET_KEY]
+    #card = Card.find_by(user_id: current_user.id) 
 
-    redirect_to new_card_path and return unless card.present?
+    #redirect_to new_card_path and return unless card.present?
 
-    customer = Payjp::Customer.retrieve(card.customer_token)
-    @card = customer.cards.first
+    #customer = Payjp::Customer.retrieve(card.customer_token)
+    #@card = customer.cards.first
   end
   
 

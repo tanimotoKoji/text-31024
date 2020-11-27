@@ -69,15 +69,15 @@ class PostsController < ApplicationController
   end
 
   def order 
-    redirect_to new_card_path and return unless current_user.card.present?
+    #redirect_to new_card_path and return unless current_user.card.present?
 
-    Payjp.api_key = Rails.application.credentials.PAYJP[:PAYJP_SECRET_KEY]
-   customer_token = current_user.card.customer_token 
-   Payjp::Charge.create(
-     amount: @post.price, 
-     customer: customer_token, 
-     currency: 'jpy' 
-     )
+    #Payjp.api_key = Rails.application.credentials.PAYJP[:PAYJP_SECRET_KEY]
+    #customer_token = current_user.card.customer_token 
+    #Payjp::Charge.create(
+     #amount: @post.price, 
+     #customer: customer_token, 
+     #currency: 'jpy' 
+     #)
 
      PostOrder.create(post_id: params[:id], user_id: current_user.id, price: @post.price)
      redirect_to post_path

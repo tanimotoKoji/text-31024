@@ -26,8 +26,18 @@
         </div>
 
         <div class="field">
-         <%= f.label :current_password %> <i>(パスワード確認)</i><br />
+         <%= f.label :current_password %> <i></i><br />
         <%= f.password_field :current_password, autocomplete: "current-password" %>
+        </div>
+
+        <div class="field">
+         <%= f.label :password %> <i></i><br />
+        <%= f.password_field :password, autocomplete: "current-password" %>
+        </div>
+
+        <div class="field">
+         <%= f.label :password_confirmation %> <i></i><br />
+        <%= f.password_field :password_confirmation, autocomplete: "current-password" %>
         </div>
 
       
