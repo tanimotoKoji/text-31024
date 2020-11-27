@@ -33,8 +33,18 @@ class SecretController < ApplicationController
     @type_id = Post.pluck(:type_id)
     @type_count = aggregateOpiniont(@type_id)
     @post_all = Post.all 
-    @totalsales = PostOrder.all.includes(:post)
 
+    totalsales = PostOrder.all.includes(:post)
+
+      c = []
+    totalsales.each do |d|
+      c << d.created_at.strftime('%Y%m%d').to_s
+   end
+
+     # 配列に含まれている重複している値を数える
+    @data = c.each_with_object(Hash.new(0)){|v,o| o[v]+=1}
+    @today = Date.today
+    @lastmonth_today = @today.prev_day(7)
  end
 
  private
@@ -42,6 +52,15 @@ class SecretController < ApplicationController
  def sales_set
    @posts = @post.where.not(price: 0)
    @order_posts = PostOrder.where(post_id: @posts.ids)
+   
+   order_posts = @order_posts
+   c = []
+    order_posts.each do |d|
+    c << d.created_at.strftime('%Y%m%d').to_s
+   end
+
+     # 配列に含まれている重複している値を数える
+    @data = c.each_with_object(Hash.new(0)){|v,o| o[v]+=1}
    @today = Date.today
    @lastmonth_today = @today.prev_day(7)
  end  
