@@ -52,7 +52,9 @@
         <td class="ev-user">
         <a href="/users/<%= evaluation.user.id %>">
       <%= evaluation.user.nickname %>
+      <% if evaluation.user.image.attached?%>
       <%= image_tag evaluation.user.image , :size =>'140x140', class:"post-user-img"%>
+      <% end %>
     </a></td>
   
 

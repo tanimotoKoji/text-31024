@@ -26,7 +26,9 @@
 </header>
 
   <div class="user-total">
+    <% if @user_image.attached?%>
     <%= image_tag @user_image , :size =>'400x320', class:"user-box-img"%>
+    <% end %>
     <div class="profile-details">
     <%= link_to '✉️ チャットルームへ!', chat_path(@user.id), class:"dm"%>
     <%= render partial: "follow_button", locals: {user: @user } %>
