@@ -40,13 +40,16 @@
 <div class="like_button">
 <%= render 'like', post: @post %>
 </div>
-<% unless @post.genre_id == 5%>
+<% unless @post.genre_id == 5 || @post.genre_id == 6%>
   <%= link_to '⭐️ この投稿に対する評価一覧 ⭐️', evaluation_path(@post.id), class:"like-comment", data: {"turbolinks" => false}%><br>
 <% if current_user.id != @post.user_id %>  
   <%= link_to '⭐️ 詳細評価の入力もお願い致します!! ⭐️', post_evaluations_path(@post.id), class:"like-comment", data: {"turbolinks" => false}%>
 <% end %>
 <% end %>
-
+<% if @post.genre_id == 6%>
+ <%= link_to '⭐️ アンケート結果 ⭐️', evaluation_path(@post.id), class:"like-comment", data: {"turbolinks" => false}%><br>
+ <%= link_to '🚨 アンケートに参加 🚨', post_evaluations_path(@post.id), class:"like-comment", data: {"turbolinks" => false}%>
+<% end %>
 <% if @post.genre_id == 5 && @follower.include?(current_user.id) %>
   <%= link_to '🚨 グループ内アンケートに参加 🚨', post_evaluations_path(@post.id), class:"like-comment", data: {"turbolinks" => false}%>
 <% end %>
