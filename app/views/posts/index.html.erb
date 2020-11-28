@@ -2,7 +2,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <meta name="turbolinks-cache-control" content="no-cache">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 
@@ -85,10 +86,7 @@
         <% end%></td>
         <td class="post-user">
         <a href="/users/<%= post.user.id %>">
-        <%= post.user.nickname %>
-        <% if post.user.image.attached?%>
-        <%= image_tag post.user.image , :size =>'100x100', class:"post-user-img"%></td>
-        <% end %>
+        <%= post.user.nickname %><%= image_tag post.user.image , :size =>'100x100', class:"post-user-img"%></td>
         <td class="post-evaluation"><div id="star-rate-<%= post.id %>"></div>
         </a></td>
         <td class="post-opening"><%= post.content %></td>
