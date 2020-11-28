@@ -39,13 +39,16 @@ input[type="radio"]:checked + label{
 }
 
 .contents-row {
-  height: 1000px;
+  width: 550px;
+  height: 2000px;
   font-size: 20px;
   font-weight: bold;
+  margin-top: 110px;
 }
 
 .name {
   border-bottom: 2px double mediumblue;
+  color: mediumblue;
   font-size: 25px;
 }
 
@@ -56,9 +59,12 @@ input[type="radio"]:checked + label{
 }
 
 .user-a {
-  color: black;
+  color:mediumblue;
 }
-/*# sourceMappingURL=users.css.map */
+.user-posts-all{
+  width: 550px;
+  margin-top: 50px;
+}
 .loader {
   transition: opacity 2s;
 }

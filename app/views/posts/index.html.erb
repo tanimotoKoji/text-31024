@@ -2,8 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="turbolinks-cache-control" content="no-cache">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 
@@ -71,22 +70,25 @@
     <% @post.each do |post| %>
       <tr>
         <% unless @buy.include?(post.id) || current_user.id == post.user_id || post.pay_id == 2%>
-        <td class="post-title"><%= post.title %></a></td>
+          <td class="post-title"><%= post.title %></a></td>
         <% else %>
-        <td class="post-title"><a href="/posts/<%= post.id %>"><%= post.title %></a></td>
+          <td class="post-title"><a href="/posts/<%= post.id %>"><%= post.title %></a></td>
         <% end %>
-        <td class="post-category"><%= post.genre.name %></td>
-        <td class="post-price"><%= post.price %><%="円"%>
-        <% if current_user.id == post.user_id%>
-        <button type="submit" class="buyed-btn" disabled>投稿品</button>
+          <td class="post-category"><%= post.genre.name %></td>
+          <td class="post-price"><%= post.price %><%="円"%>
+        <% if current_user.id == post.user_id && post.price != 0%>
+          <button type="submit" class="buyed-btn" disabled>投稿品</button>
         <% elsif @buy.include?(post.id)%>
-        <button type="submit" class="buyed-btn" disabled>購入済</button>
+          <button type="submit" class="buyed-btn" disabled>購入済</button>
         <% elsif post.pay_id == 1%>
-        <%= button_to "購入", order_post_path(post.id), method: :post, class:"buy-btn", id:"buy-btn"%>
+         <%= button_to "購入", order_post_path(post.id), method: :post, class:"buy-btn", id:"buy-btn"%>
         <% end%></td>
         <td class="post-user">
         <a href="/users/<%= post.user.id %>">
-        <%= post.user.nickname %><%= image_tag post.user.image , :size =>'100x100', class:"post-user-img"%></td>
+        <%= post.user.nickname %>
+        <% if post.user.image.attached?%>
+         <%= image_tag post.user.image , :size =>'100x100', class:"post-user-img"%></td>
+        <% end %>
         <td class="post-evaluation"><div id="star-rate-<%= post.id %>"></div>
         </a></td>
         <td class="post-opening"><%= post.content %></td>
