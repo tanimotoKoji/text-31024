@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     @user = @post.user
     @likes_count = Like.where(post_id: @post.id).count
     @follower = Relationship.where(follow_id: @user.id).pluck(:user_id)
-    @buy = PostOrder.where(user_id: current_user.id).pluck(:post_id)
+    @buy = PostOrder.where(post_id: @post.id).pluck(:post_id)
   end
 
   # GET /posts/1/edit
