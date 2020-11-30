@@ -42,9 +42,9 @@
       <%= f.number_field :price_gteq, class:"search-pricel"%>円以上〜
       <%= f.number_field :price_lt, class:"search-pricep"%>円未満<br>
       <%= f.label :"❓ 大カテゴリー:" %>
-      <%= f.collection_select(:genre_id_eq, Genre.all, :id, :name, {}, {class:"post-search-box", id:"genre_id"}) %>
+      <%= f.collection_select(:genre_id_eq, Genre.all, :id, :name, {include_blank: '選択なし'}, {class:"post-search-box", id:"genre_id"}) %>
       <%= f.label :"❓ 中カテゴリー:" %>
-      <%= f.collection_select(:type_id_eq, Type.all, :id, :name, {}, {class:"type-search-box", id:"type_id"}) %>
+      <%= f.collection_select(:type_id_eq, Type.all, :id, :name, {include_blank: '選択なし'}, {class:"type-search-box", id:"type_id"}) %>
       <%= f.submit "検索", class:"search-btn" %>
       <% end %>
       </div>
