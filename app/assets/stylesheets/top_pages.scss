@@ -128,6 +128,46 @@ header {
   opacity: 1;
 }
 
+.btn-third {
+  background-color: rgb(0, 195, 255);
+  width: 500px;
+  height: 500px;
+  flex-direction: column;
+  padding: 8px 24px;
+  display: inline-block;
+  opacity: 0.8;
+  border-radius: 4px;
+  text-align: center;
+}
+.btn-third a{
+  color: antiquewhite;
+}
+.btn-third:hover {
+  opacity: 1;
+}
+
+.btn-fourth {
+  background-color: green;
+  width: 500px;
+  height: 500px;
+  flex-direction: column;
+  padding: 8px 24px;
+  display: inline-block;
+  opacity: 0.8;
+  border-radius: 4px;
+  text-align: center;
+}
+.btn-fourth a{
+  color: antiquewhite;
+}
+.btn-fourth:hover {
+  opacity: 1;
+}
+
+
+
+
+
 .twitter {
   width: 280px;
   background-color: #55acee;
@@ -513,4 +553,83 @@ header {
 }
 .rank-primary:hover{
  background-color: blue;
+}
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  /* Fix of Webkit flickering */
+  z-index: 1;
+
+}
+ 
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+ 
+.swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+}
+ 
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute;
+  top: 50%;
+  width: calc(var(--swiper-navigation-size) / 44 * 27);
+  height: var(--swiper-navigation-size);
+  margin-top: calc(-1 * var(--swiper-navigation-size) / 2);
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--swiper-navigation-color, var(--swiper-theme-color));
+}
+ 
+.swiper-pagination {
+  position: absolute;
+  text-align: center;
+  transition: 300ms opacity;
+  transform: translate3d(0, 0, 0);
+  z-index: 10;
+}
+ 
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 100%;
+  background: #000;
+  opacity: 0.2;
+}
+:root {
+  --swiper-theme-color: #007aff;
+}
+ 
+:root {
+  --swiper-navigation-size: 44px;
+  /*
+  --swiper-navigation-color: var(--swiper-theme-color);
+  */
+}
+ 
+:root {
+  /*
+  --swiper-pagination-color: var(--swiper-theme-color);
+  */
 }
