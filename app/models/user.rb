@@ -47,5 +47,12 @@ class User < ApplicationRecord
   def following?(other_user)
     self.followings.include?(other_user)
   end
+
+
+  def self.guest
+    find_or_create_by(email: "admin@gmail.com") do |user|
+    user.password = "admin111"
+    end
+  end
 end
 
