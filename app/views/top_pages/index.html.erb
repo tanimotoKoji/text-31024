@@ -24,6 +24,7 @@
           <a href="./top_pages/show">ランキングをみる！</a>
           <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
           <%else%>
+          <%= link_to 'テストユーザーでログイン', users_guest_sign_in_path, class: "test-log",  method: :post %>
           <%= link_to '新規登録', new_user_registration_path %>
           <%= link_to 'ログイン', new_user_session_path %>
           <%end%>
@@ -32,8 +33,8 @@
     </header>
 
 
-
 <div class="main-content">
+
 <div class="top-wrapper">
       <div class="container">
         <h1>Post Your Work.</h1>
@@ -42,14 +43,14 @@
         <p>趣味、ビジネス、簡単なアンケートにもご利用頂けます</p>
         <p>あなたのアイディアを投稿し、皆さんから意見をもらいましょう！</p>
         <div class="btn-wrapper">
-          
+  
           
        <!-- Slider main container -->
       <div class="swiper-container">
     <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
         <!-- Slides -->
-        <div class="swiper-slide"><div class="btn signup">
+        <div class="swiper-slide"><div class="btn-signup">
           <a href="#" >投稿作品はtrix-editorで作成!<br>
           画像の挿入等も簡単、お手軽です！</a><br>
           <%= image_tag asset_path('trix.png'),alt:"trix", height:400, width:450, class:"trix" %>
