@@ -33,7 +33,7 @@
 <div class="chats-room">
 
 
-<%= form_with model: @chat, class:"chats", remote:false do |f| %>
+<%= form_with model: @chat, class:"chats", locale:true do |f| %>
     <%= f.text_field :message, class:"chat-message" %>
     <%= f.hidden_field :room_id %>
     <%= f.submit class:"chats-btn" %>
@@ -51,7 +51,8 @@
         <% @chats.each do |chat| %>
             <tr class="chat-contents">
                 <td class="chat-user-name"><a class="chat-a" href="/users/<%= chat.user.id %>">
-                 <%= chat.user.nickname %></td><td><%= image_tag chat.user.image , :size =>'70x70', class:"chat-user-img"%></td>
+                 <%= chat.user.nickname %></td>
+                 <% if chat.user.image.attached?%><td><%= image_tag chat.user.image , :size =>'70x70', class:"chat-user-img"%></td><% end %>
                 <td class="chat-message"><%= chat.message %></td>
             </tr>
         <% end %>

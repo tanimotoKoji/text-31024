@@ -62,7 +62,7 @@
         <% end %>
         <td class="user-rank"><%= user_rank.occupation.name %></td>
         <td class="user-rank"><%= render partial: "follow_button", locals: {user: user_rank } %></td>
-        <td class="user-rank"><%= link_to '✉️  送る!', chat_path(user_rank.id), class:"mail"%></td>
+        <td class="user-rank"><%= link_to '✉️  送る!', chat_path(user_rank.id), data: {"turbolinks"=>false}, class:"mail"%></td>
         <td class="user-comments"><%= user_rank.profile %></td>
          </tr>
     <% end %>
